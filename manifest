@@ -1,0 +1,12 @@
+: 1
+name: libmingw-stdthreads
+version: 0.1.0-a.0.z
+summary: Standard C++14 threads implementation for MinGW GCC
+license: BSD-2-Clause ; BSD 2-Clause "Simplified" License
+description-file: README.md
+url: https://github.com/build2-packaging/libmingw-stdthreads
+email: packaging@build2.org ; Mailing list.
+build-error-email: builds@build2.org
+builds: windows : &gcc
+depends: * build2 >= 0.14.0
+depends: * bpkg >= 0.14.0

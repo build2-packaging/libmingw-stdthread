@@ -1,0 +1,7 @@
+project = libmingw-stdthreads
+
+using version
+using config
+using test
+using install
+using dist

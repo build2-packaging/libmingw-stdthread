@@ -1,0 +1,13 @@
+lib{mingw-stdthreads}: hxx{*}
+
+# Build options.
+#
+cxx.poptions =+ "-I$src_base"
+
+# Export options.
+#
+lib{mingw-stdthreads}: cxx.export.poptions = "-I$src_base"
+
+# Install directly into say, /usr/include/ (all header are mingw-prefixed).
+#
+hxx{*}: install = include/
