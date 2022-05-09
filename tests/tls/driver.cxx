@@ -5,19 +5,11 @@
 #undef NDEBUG
 #include <cassert>
 
-// We could try to fallback to __thread.
+// Note that both thread_local and __thread seem to be functioning in both
+// posix and win32 GCC threads configurations.
 //
-// @@ Maybe available in later versions?
-//
-#if 1
-#ifndef __cpp_thread_local
-# error no thread_local support
-#endif
-
 thread_local bool b;
-#else
-__thread bool b;
-#endif
+//__thread bool b;
 
 int main ()
 {
