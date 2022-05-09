@@ -9,15 +9,15 @@
 //
 // @@ Maybe available in later versions?
 //
-#if 0
+#if 1
 #ifndef __cpp_thread_local
 # error no thread_local support
 #endif
 
 thread_local bool b;
-#endif
-
+#else
 __thread bool b;
+#endif
 
 int main ()
 {
