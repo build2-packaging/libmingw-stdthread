@@ -1,24 +1,20 @@
 /**
-* @file mingw.thread.h
-* @brief std::thread implementation for MinGW
-* (c) 2013-2016 by Mega Limited, Auckland, New Zealand
-* @author Alexander Vassilev
+* std::thread implementation for MinGW-w64
 *
-* @copyright Simplified (2-clause) BSD License.
+* Copyright (c) 2013-2016 by Mega Limited, Auckland, New Zealand
+* Copyright (c) 2022 the build2 authors
+*
+* Licensed under the simplified (2-clause) BSD License.
 * You should have received a copy of the license along with this
 * program.
 *
 * This code is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* @note
-* This file may become part of the mingw-w64 runtime package. If/when this happens,
-* the appropriate license will be added, i.e. this code will become dual-licensed,
-* and the current BSD 2-clause license will stay.
 */
 
-#ifndef WIN32STDTHREAD_H
-#define WIN32STDTHREAD_H
+#ifndef MINGW_THREAD_HXX
+#define MINGW_THREAD_HXX
 
 #if !defined(__cplusplus) || (__cplusplus < 201402L)
 #  error C++14 compiler required
@@ -32,7 +28,7 @@
 #include <cerrno>       //  Detect error type.
 #include <exception>    //  For std::terminate
 #include <system_error> //  For std::system_error
-#include <functional>   //  For std::hash
+#include <functional>   //  For std::hash, std::invoke (C++17)
 #include <tuple>        //  For std::tuple
 #include <chrono>       //  For sleep timing.
 #include <memory>       //  For std::unique_ptr
@@ -46,7 +42,9 @@
 
 #include <process.h>  //  For _beginthreadex
 
-#include "mingw-invoke.hxx"
+#if __cplusplus < 201703L
+#  include "mingw-invoke.hxx"
+#endif
 
 namespace mingw_stdthread
 {
@@ -85,7 +83,11 @@ namespace mingw_stdthread
 
         void callFunc()
         {
-            detail::invoke(std::move(mFunc), std::move(std::get<S>(mArgs)) ...);
+#if __cplusplus < 201703L
+          detail::invoke(std::move(mFunc), std::move(std::get<S>(mArgs)) ...);
+#else
+          std::invoke (std::move(mFunc), std::move(std::get<S>(mArgs)) ...);
+#endif
         }
     };
 
@@ -104,7 +106,7 @@ namespace mingw_stdthread
       friend class detail::ThreadIdTool;
       explicit id(DWORD aId) noexcept : mId(aId){}
     public:
-      id (void) noexcept = default;
+      id () noexcept = default;
       friend bool operator==(id x, id y) noexcept {return x.mId == y.mId; }
       friend bool operator!=(id x, id y) noexcept {return x.mId != y.mId; }
       friend bool operator< (id x, id y) noexcept {return x.mId <  y.mId; }
@@ -159,7 +161,7 @@ namespace mingw_stdthread
       other.mThreadId = id{};
     }
 
-    thread(const thread &other)=delete;
+    thread(const thread &other) = delete;
 
     template<class Func, typename... Args>
     explicit thread(Func&& func, Args&&... args) : mHandle(), mThreadId()
@@ -168,9 +170,8 @@ namespace mingw_stdthread
 
       using ArgSequence = typename detail::GenIntSeq<sizeof...(Args)>::type;
       using Call = detail::ThreadFuncCall<Func, ArgSequence, Args...>;
-      auto call = new Call(
-        std::forward<Func>(func), std::forward<Args>(args)...);
-      unsigned id_receiver;
+      auto call = new Call(std::forward<Func>(func), std::forward<Args>(args)...);
+      unsigned int id_receiver;
       auto int_handle = _beginthreadex(NULL, 0, threadfunc<Call>,
                                        static_cast<LPVOID>(call), 0, &id_receiver);
       if (int_handle == 0)
@@ -326,4 +327,4 @@ namespace std
   };
 }
 
-#endif // WIN32STDTHREAD_H
+#endif // MINGW_THREAD_HXX

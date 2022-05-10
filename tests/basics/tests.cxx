@@ -1,4 +1,4 @@
-// Note: upstrea/original tests/tests.cpp
+// Note: upstream/original tests/tests.cpp
 //
 #include <mingw-thread.hxx>
 #include <mingw-mutex.hxx>

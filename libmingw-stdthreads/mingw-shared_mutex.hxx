@@ -1,19 +1,20 @@
-/// \file mingw.shared_mutex.h
-/// \brief Standard-compliant shared_mutex for MinGW
-///
-/// (c) 2017 by Nathaniel J. McClatchey, Athens OH, United States
-/// \author Nathaniel J. McClatchey
-///
-/// \copyright Simplified (2-clause) BSD License.
-///
-/// \note This file may become part of the mingw-w64 runtime package. If/when
-/// this happens, the appropriate license will be added, i.e. this code will
-/// become dual-licensed, and the current BSD 2-clause license will stay.
-/// \note Target Windows version is determined by WINVER, which is determined in
-/// <windows.h> from _WIN32_WINNT, which can itself be set by the user.
+/**
+* std::shared_mutex et al implementation for MinGW-w64
+*
+* Copyright (c) 2017 by Nathaniel J. McClatchey, Athens OH, United States
+* Copyright (c) 2022 the build2 authors
+*
+* Licensed under the simplified (2-clause) BSD License.
+* You should have received a copy of the license along with this
+* program.
+*
+* This code is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*/
 
-#ifndef MINGW_SHARED_MUTEX_H_
-#define MINGW_SHARED_MUTEX_H_
+#ifndef MINGW_SHARED_MUTEX_HXX
+#define MINGW_SHARED_MUTEX_HXX
 
 #if !defined(__cplusplus) || (__cplusplus < 201402L)
 #  error C++14 compiler required
@@ -51,25 +52,24 @@ namespace mingw_stdthread
   public:
     using mutex::native_handle_type;
     using mutex::lock;
+    using mutex::try_lock;
     using mutex::unlock;
     using mutex::native_handle;
 
-    void lock_shared (void)
+    void lock_shared ()
     {
-      AcquireSRWLockShared(native_handle());
+      AcquireSRWLockShared(&mHandle);
     }
 
-    void unlock_shared (void)
+    void unlock_shared ()
     {
-      ReleaseSRWLockShared(native_handle());
+      ReleaseSRWLockShared(&mHandle);
     }
 
-    bool try_lock_shared (void)
+    bool try_lock_shared ()
     {
-      return TryAcquireSRWLockShared(native_handle()) != 0;
+      return TryAcquireSRWLockShared(&mHandle) != 0;
     }
-
-    using mutex::try_lock;
   };
 
   class shared_timed_mutex : shared_mutex
@@ -121,4 +121,4 @@ namespace mingw_stdthread
   };
 }
 
-#endif // MINGW_SHARED_MUTEX_H_
+#endif // MINGW_SHARED_MUTEX_HXX

@@ -1,24 +1,20 @@
 /**
-* @file mingw.mutex.h
-* @brief std::mutex et al implementation for MinGW
-** (c) 2013-2016 by Mega Limited, Auckland, New Zealand
-* @author Alexander Vassilev
+* std::mutex et al implementation for MinGW-w64
 *
-* @copyright Simplified (2-clause) BSD License.
+* Copyright (c) 2013-2016 by Mega Limited, Auckland, New Zealand
+* Copyright (c) 2022 the build2 authors
+*
+* Licensed under the simplified (2-clause) BSD License.
 * You should have received a copy of the license along with this
 * program.
 *
 * This code is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* @note
-* This file may become part of the mingw-w64 runtime package. If/when this happens,
-* the appropriate license will be added, i.e. this code will become dual-licensed,
-* and the current BSD 2-clause license will stay.
 */
 
-#ifndef WIN32STDMUTEX_H
-#define WIN32STDMUTEX_H
+#ifndef MINGW_MUTEX_HXX
+#define MINGW_MUTEX_HXX
 
 #if !defined(__cplusplus) || (__cplusplus < 201402L)
 #  error C++14 compiler required
@@ -92,6 +88,7 @@ namespace mingw_stdthread
 
   class mutex
   {
+  protected:
     SRWLOCK mHandle;
   public:
     typedef PSRWLOCK native_handle_type;
@@ -101,21 +98,21 @@ namespace mingw_stdthread
 #pragma GCC diagnostic pop
     mutex (const mutex&) = delete;
     mutex & operator= (const mutex&) = delete;
-    void lock (void)
+    void lock ()
     {
       AcquireSRWLockExclusive(&mHandle);
     }
-    void unlock (void)
+    void unlock ()
     {
       ReleaseSRWLockExclusive(&mHandle);
     }
     //  TryAcquireSRW functions are a Windows 7 feature.
-    bool try_lock (void)
+    bool try_lock ()
     {
       BOOL ret = TryAcquireSRWLockExclusive(&mHandle);
       return ret;
     }
-    native_handle_type native_handle (void)
+    native_handle_type native_handle ()
     {
         return &mHandle;
     }
@@ -215,4 +212,4 @@ namespace mingw_stdthread
   typedef recursive_timed_mutex timed_mutex;
 }
 
-#endif // WIN32STDMUTEX_H
+#endif // MINGW_MUTEX_HXX

@@ -1,25 +1,20 @@
 /**
-* @file condition_variable.h
-* @brief std::condition_variable implementation for MinGW
+* std::condition_variable implementation for MinGW-w64
 *
-* (c) 2013-2016 by Mega Limited, Auckland, New Zealand
-* @author Alexander Vassilev
+* Copyright (c) 2013-2016 by Mega Limited, Auckland, New Zealand
+* Copyright (c) 2022 the build2 authors
 *
-* @copyright Simplified (2-clause) BSD License.
+* Licensed under the simplified (2-clause) BSD License.
 * You should have received a copy of the license along with this
 * program.
 *
 * This code is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-* @note
-* This file may become part of the mingw-w64 runtime package. If/when this happens,
-* the appropriate license will be added, i.e. this code will become dual-licensed,
-* and the current BSD 2-clause license will stay.
 */
 
-#ifndef MINGW_CONDITIONAL_VARIABLE_H
-#define MINGW_CONDITIONAL_VARIABLE_H
+#ifndef MINGW_CONDITION_VARIABLE_HXX
+#define MINGW_CONDITION_VARIABLE_HXX
 
 #if !defined(__cplusplus) || (__cplusplus < 201402L)
 #  error C++14 compiler required
@@ -82,23 +77,23 @@ namespace mingw_stdthread
     }
 public:
     using native_handle_type = PCONDITION_VARIABLE;
-    native_handle_type native_handle (void)
+    native_handle_type native_handle ()
     {
-        return &cvariable_;
+      return &cvariable_;
     }
 
-    condition_variable (void) = default;
-    ~condition_variable (void) = default;
+    condition_variable () = default;
+    ~condition_variable () = default;
 
     condition_variable (const condition_variable &) = delete;
     condition_variable & operator= (const condition_variable &) = delete;
 
-    void notify_one (void) noexcept
+    void notify_one () noexcept
     {
       WakeConditionVariable(&cvariable_);
     }
 
-    void notify_all (void) noexcept
+    void notify_all () noexcept
     {
       WakeAllConditionVariable(&cvariable_);
     }
@@ -198,23 +193,23 @@ public:
   public:
     using native_handle_type = typename condition_variable::native_handle_type;
 
-    native_handle_type native_handle (void)
+    native_handle_type native_handle ()
     {
       return internal_cv_.native_handle();
     }
 
-    void notify_one (void) noexcept
+    void notify_one () noexcept
     {
       internal_cv_.notify_one();
     }
 
-    void notify_all (void) noexcept
+    void notify_all () noexcept
     {
       internal_cv_.notify_all();
     }
 
-    condition_variable_any (void) = default;
-    ~condition_variable_any (void) = default;
+    condition_variable_any () = default;
+    ~condition_variable_any () = default;
 
     template<class L>
     void wait (L & lock)
@@ -269,4 +264,4 @@ public:
   };
 }
 
-#endif // MINGW_CONDITIONAL_VARIABLE_H
+#endif // MINGW_CONDITION_VARIABLE_HXX

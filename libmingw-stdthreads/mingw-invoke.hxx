@@ -1,17 +1,20 @@
-/// \file mingw.invoke.h
-/// \brief Lightweight `invoke` implementation, for C++11 and C++14.
-///
-/// (c) 2018-2019 by Nathaniel J. McClatchey, San Jose, CA, United States
-/// \author Nathaniel J. McClatchey, PhD
-///
-/// \copyright Simplified (2-clause) BSD License.
-///
-/// \note This file may become part of the mingw-w64 runtime package. If/when
-/// this happens, the appropriate license will be added, i.e. this code will
-/// become dual-licensed, and the current BSD 2-clause license will stay.
+/**
+* Lightweight std::invoke() implementation for C++11 and C++14
+*
+* Copyright (c) 2018-2019 by Nathaniel J. McClatchey, San Jose, CA, United States
+* Copyright (c) 2022 the build2 authors
+*
+* Licensed under the simplified (2-clause) BSD License.
+* You should have received a copy of the license along with this
+* program.
+*
+* This code is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*/
 
-#ifndef MINGW_INVOKE_H_
-#define MINGW_INVOKE_H_
+#ifndef MINGW_INVOKE_HXX
+#define MINGW_INVOKE_HXX
 
 #include <type_traits>  //  For std::result_of, etc.
 #include <utility>      //  For std::forward
@@ -21,8 +24,8 @@ namespace mingw_stdthread
 {
   namespace detail
   {
-    // For compatibility, implement std::invoke for C++14.
-#if __cplusplus < 201703L
+    // For compatibility, implement std::invoke for C++11 and C++14.
+    //
     template<bool PMemFunc, bool PMemData>
     struct Invoker
     {
@@ -100,10 +103,7 @@ namespace mingw_stdthread
     {
       return InvokeResult<F, Args...>::invoke(std::forward<F>(f), std::forward<Args>(args)...);
     }
-#else
-    using std::invoke;
-#endif
   }
 }
 
-#endif // MINGW_INVOKE_H_
+#endif // MINGW_INVOKE_HXX
