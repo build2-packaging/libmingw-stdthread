@@ -13,8 +13,8 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-#ifndef MINGW_MUTEX_HXX
-#define MINGW_MUTEX_HXX
+#ifndef LIBMINGW_STDTHREAD_MUTEX_HXX
+#define LIBMINGW_STDTHREAD_MUTEX_HXX
 
 #if !defined(__cplusplus) || (__cplusplus < 201402L)
 #  error C++14 compiler required
@@ -212,4 +212,4 @@ namespace mingw_stdthread
   typedef recursive_timed_mutex timed_mutex;
 }
 
-#endif // MINGW_MUTEX_HXX
+#endif // LIBMINGW_STDTHREAD_MUTEX_HXX

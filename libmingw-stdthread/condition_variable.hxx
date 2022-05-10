@@ -13,8 +13,8 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-#ifndef MINGW_CONDITION_VARIABLE_HXX
-#define MINGW_CONDITION_VARIABLE_HXX
+#ifndef LIBMINGW_STDTHREAD_CONDITION_VARIABLE_HXX
+#define LIBMINGW_STDTHREAD_CONDITION_VARIABLE_HXX
 
 #if !defined(__cplusplus) || (__cplusplus < 201402L)
 #  error C++14 compiler required
@@ -32,8 +32,8 @@
 
 #include <synchapi.h>
 
-#include "mingw-mutex.hxx"
-#include "mingw-shared_mutex.hxx"
+#include <libmingw-stdthread/mutex.hxx>
+#include <libmingw-stdthread/shared_mutex.hxx>
 
 namespace mingw_stdthread
 {
@@ -264,4 +264,4 @@ public:
   };
 }
 
-#endif // MINGW_CONDITION_VARIABLE_HXX
+#endif // LIBMINGW_STDTHREAD_CONDITION_VARIABLE_HXX

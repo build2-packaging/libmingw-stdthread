@@ -13,8 +13,8 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-#ifndef MINGW_SHARED_MUTEX_HXX
-#define MINGW_SHARED_MUTEX_HXX
+#ifndef LIBMINGW_STDTHREAD_SHARED_MUTEX_HXX
+#define LIBMINGW_STDTHREAD_SHARED_MUTEX_HXX
 
 #if !defined(__cplusplus) || (__cplusplus < 201402L)
 #  error C++14 compiler required
@@ -34,7 +34,7 @@
 #include <shared_mutex> // shared_lock
 
 //  For defer_lock_t, adopt_lock_t, and try_to_lock_t
-#include "mingw-mutex.hxx"
+#include <libmingw-stdthread/mutex.hxx>
 
 #include <synchapi.h>
 
@@ -121,4 +121,4 @@ namespace mingw_stdthread
   };
 }
 
-#endif // MINGW_SHARED_MUTEX_HXX
+#endif // LIBMINGW_STDTHREAD_SHARED_MUTEX_HXX

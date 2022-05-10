@@ -1,4 +1,4 @@
-# libmingw-stdthreads
+# libmingw-stdthread
 
 Standard C++14 threads implementation for MinGW-w64 GCC.
 

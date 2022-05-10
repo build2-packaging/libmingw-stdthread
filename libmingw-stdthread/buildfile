@@ -1,0 +1,13 @@
+lib{mingw-stdthread}: hxx{*}
+
+# Build options.
+#
+cxx.poptions =+ "-I$src_root"
+
+# Export options.
+#
+lib{mingw-stdthread}: cxx.export.poptions = "-I$src_root"
+
+# Install into the libmingw-stdthread/ subdirectory of, say, /usr/include/.
+#
+hxx{*}: install = include/libmingw-stdthread/

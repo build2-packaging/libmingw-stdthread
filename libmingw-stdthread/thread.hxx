@@ -13,8 +13,8 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-#ifndef MINGW_THREAD_HXX
-#define MINGW_THREAD_HXX
+#ifndef LIBMINGW_STDTHREAD_THREAD_HXX
+#define LIBMINGW_STDTHREAD_THREAD_HXX
 
 #if !defined(__cplusplus) || (__cplusplus < 201402L)
 #  error C++14 compiler required
@@ -43,7 +43,7 @@
 #include <process.h>  //  For _beginthreadex
 
 #if __cplusplus < 201703L
-#  include "mingw-invoke.hxx"
+#  include <libmingw-stdthread/invoke.hxx>
 #endif
 
 namespace mingw_stdthread
@@ -327,4 +327,4 @@ namespace std
   };
 }
 
-#endif // MINGW_THREAD_HXX
+#endif // LIBMINGW_STDTHREAD_THREAD_HXX

@@ -13,8 +13,8 @@
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
-#ifndef MINGW_INVOKE_HXX
-#define MINGW_INVOKE_HXX
+#ifndef LIBMINGW_STDTHREAD_INVOKE_HXX
+#define LIBMINGW_STDTHREAD_INVOKE_HXX
 
 #include <type_traits>  //  For std::result_of, etc.
 #include <utility>      //  For std::forward
@@ -106,4 +106,4 @@ namespace mingw_stdthread
   }
 }
 
-#endif // MINGW_INVOKE_HXX
+#endif // LIBMINGW_STDTHREAD_INVOKE_HXX

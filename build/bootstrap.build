@@ -1,4 +1,4 @@
-project = libmingw-stdthreads
+project = libmingw-stdthread
 
 using version
 using config

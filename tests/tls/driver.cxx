@@ -1,4 +1,4 @@
-#include <mingw-thread.hxx>
+#include <libmingw-stdthread/thread.hxx>
 
 #include <vector>
 

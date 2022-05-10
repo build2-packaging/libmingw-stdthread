@@ -1,6 +1,6 @@
 $out_root/
 {
-  include libmingw-stdthreads/
+  include libmingw-stdthread/
 }
 
-export $out_root/libmingw-stdthreads/$import.target
+export $out_root/libmingw-stdthread/$import.target

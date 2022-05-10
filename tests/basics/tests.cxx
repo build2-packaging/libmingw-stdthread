@@ -1,9 +1,9 @@
 // Note: upstream/original tests/tests.cpp
 //
-#include <mingw-thread.hxx>
-#include <mingw-mutex.hxx>
-#include <mingw-condition_variable.hxx>
-#include <mingw-shared_mutex.hxx>
+#include <libmingw-stdthread/thread.hxx>
+#include <libmingw-stdthread/mutex.hxx>
+#include <libmingw-stdthread/condition_variable.hxx>
+#include <libmingw-stdthread/shared_mutex.hxx>
 //#include <mingw.future.h>
 
 #include <vector>
