@@ -14,13 +14,17 @@ struct sptr
   ~sptr () {delete p_;}
 };
 
-// Note that both thread_local and __thread seem to be functioning, at least
-// in the POSIX GCC threads configuration.
+// Note that while __thread seems to be functioning, at least in the POSIX GCC
+// threads configuration, thread_local with dynamic allocation/destruction
+// appears to be broken.
 //
 __thread bool b;
+#if 0
 thread_local sptr s {nullptr};
+#endif
 
-int main ()
+int
+main ()
 {
   using thread = mingw_stdthread::thread;
 
@@ -31,8 +35,10 @@ int main ()
                            assert (!b);
                            b = true;
 
+#if 0
                            assert (s.p_ == nullptr);
                            s.p_ = new std::string ("POSIX threads are great");
+#endif
                          }));
 
   for (thread& t: ts)
