@@ -1,15 +1,24 @@
 #include <libmingw-stdthread/thread.hxx>
 
+#include <string>
 #include <vector>
 
 #undef NDEBUG
 #include <cassert>
 
-// Note that both thread_local and __thread seem to be functioning in both
-// posix and win32 GCC threads configurations.
+struct sptr
+{
+  std::string* p_;
+
+  explicit sptr (std::string* p): p_ (p) {}
+  ~sptr () {delete p_;}
+};
+
+// Note that both thread_local and __thread seem to be functioning, at least
+// in the POSIX GCC threads configuration.
 //
-thread_local bool b;
-//__thread bool b;
+__thread bool b;
+thread_local sptr s {nullptr};
 
 int main ()
 {
@@ -21,6 +30,9 @@ int main ()
                          {
                            assert (!b);
                            b = true;
+
+                           assert (s.p_ == nullptr);
+                           s.p_ = new std::string ("POSIX threads are great");
                          }));
 
   for (thread& t: ts)
